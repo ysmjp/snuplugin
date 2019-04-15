@@ -381,8 +381,9 @@ namespace Google.GData.Client
 
 
                 string header = formAuthorizationHeader(onetimeUseToken, key, uri, "GET");
-                request.Headers.Add(header); 
+                request.Headers.Add(header);
 
+                ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
                 response = request.GetResponse() as HttpWebResponse; 
 
             }
@@ -450,8 +451,9 @@ namespace Google.GData.Client
 
 
                 string header = formAuthorizationHeader(token, key, uri, "GET");
-                request.Headers.Add(header); 
+                request.Headers.Add(header);
 
+                ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
                 response = request.GetResponse() as HttpWebResponse; 
 
             }
@@ -575,8 +577,9 @@ namespace Google.GData.Client
     
     
                 string header = formAuthorizationHeader(token, key, uri, "GET");
-                request.Headers.Add(header); 
-    
+                request.Headers.Add(header);
+
+                ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
                 response = request.GetResponse() as HttpWebResponse; 
     
             }        

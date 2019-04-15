@@ -26,7 +26,7 @@ namespace SNUPlugin
                 myForm.Close();
             };
             myForm.Text = "추가 권한 요청...";
-            myForm.ClientSize = new Size(380, 122);
+            myForm.ClientSize = new Size(380, 116);
             myForm.FormBorderStyle = FormBorderStyle.FixedDialog;
             myForm.StartPosition = FormStartPosition.CenterScreen;
             myForm.MaximizeBox = false;
@@ -34,7 +34,7 @@ namespace SNUPlugin
             lblDesc.Text = msg;
             lblDesc.ForeColor = Color.Blue;
             lblDesc.Location = new Point(8, 8);
-            lblDesc.Size = new Size(myForm.ClientSize.Width - 16, 42);
+            lblDesc.Size = new Size(myForm.ClientSize.Width - 16, 36);
             lblDesc.Cursor = Cursors.Hand;
             lblDesc.Click += delegate
             {
@@ -42,6 +42,7 @@ namespace SNUPlugin
             };
             txtInput.Location = new Point(8, lblDesc.Location.Y + lblDesc.Size.Height + 8);
             txtInput.Size = new Size(myForm.ClientSize.Width - 16, 21);
+            txtInput.PasswordChar = '*';
             txtInput.KeyUp += delegate (object sender, KeyEventArgs e)
             {
                 if (e.KeyData == Keys.Return)
