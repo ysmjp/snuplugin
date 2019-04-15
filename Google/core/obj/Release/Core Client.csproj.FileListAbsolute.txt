@@ -1,0 +1,14 @@
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\core\bin\Release\Google.GData.Client.dll
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\core\bin\Release\gdata.xml
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\core\bin\Release\Newtonsoft.Json.dll
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\core\obj\Release\Core Client.csprojAssemblyReference.cache
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\core\obj\Release\Core Client.csproj.CoreCompileInputs.cache
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\core\obj\Release\Core Client.csproj.CopyComplete
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\core\obj\Release\Google.GData.Client.dll
+E:\VSProjects\SNUPlugin\Google\core\bin\Release\Google.GData.Client.dll
+E:\VSProjects\SNUPlugin\Google\core\bin\Release\gdata.xml
+E:\VSProjects\SNUPlugin\Google\core\bin\Release\Newtonsoft.Json.dll
+E:\VSProjects\SNUPlugin\Google\core\obj\Release\Core Client.csprojAssemblyReference.cache
+E:\VSProjects\SNUPlugin\Google\core\obj\Release\Core Client.csproj.CoreCompileInputs.cache
+E:\VSProjects\SNUPlugin\Google\core\obj\Release\Core Client.csproj.CopyComplete
+E:\VSProjects\SNUPlugin\Google\core\obj\Release\Google.GData.Client.dll

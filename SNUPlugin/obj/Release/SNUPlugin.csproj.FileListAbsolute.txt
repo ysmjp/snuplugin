@@ -1,0 +1,9 @@
+E:\VSProjects\SNUPlugin\SNUPlugin\obj\Release\SNUPlugin.csprojAssemblyReference.cache
+E:\VSProjects\SNUPlugin\SNUPlugin\obj\Release\SNUPlugin.csproj.CoreCompileInputs.cache
+E:\VSProjects\SNUPlugin\SNUPlugin\bin\Release\SNUPlugin.dll
+E:\VSProjects\SNUPlugin\SNUPlugin\bin\Release\SNUPlugin.pdb
+E:\VSProjects\SNUPlugin\SNUPlugin\bin\Release\UnityEditor.dll
+E:\VSProjects\SNUPlugin\SNUPlugin\bin\Release\UnityEngine.dll
+E:\VSProjects\SNUPlugin\SNUPlugin\obj\Release\SNUPlugin.csproj.CopyComplete
+E:\VSProjects\SNUPlugin\SNUPlugin\obj\Release\SNUPlugin.dll
+E:\VSProjects\SNUPlugin\SNUPlugin\obj\Release\SNUPlugin.pdb

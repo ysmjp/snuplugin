@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{01E18074-CC3A-4767-88F9-6ABA6FC5BC1E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SNUPlugin</RootNamespace>
+    <AssemblyName>SNUPlugin</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEditor">
+      <HintPath>..\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuthForm.cs" />
+    <Compile Include="Google\Core Client\abstractentry.cs" />
+    <Compile Include="Google\Core Client\abstractfeed.cs" />
+    <Compile Include="Google\Core Client\appcontrol.cs" />
+    <Compile Include="Google\Core Client\asyncDataHandler.cs" />
+    <Compile Include="Google\Core Client\asyncservice.cs" />
+    <Compile Include="Google\Core Client\atombase.cs" />
+    <Compile Include="Google\Core Client\atombaselink.cs" />
+    <Compile Include="Google\Core Client\atomcategory.cs" />
+    <Compile Include="Google\Core Client\atomcontent.cs" />
+    <Compile Include="Google\Core Client\atomfeed.cs" />
+    <Compile Include="Google\Core Client\atomfeedentry.cs" />
+    <Compile Include="Google\Core Client\atomFeedgenerator.cs" />
+    <Compile Include="Google\Core Client\atomfeedparser.cs" />
+    <Compile Include="Google\Core Client\atomicon.cs" />
+    <Compile Include="Google\Core Client\atomId.cs" />
+    <Compile Include="Google\Core Client\atomlink.cs" />
+    <Compile Include="Google\Core Client\atomlogo.cs" />
+    <Compile Include="Google\Core Client\atomnametable.cs" />
+    <Compile Include="Google\Core Client\atomperson.cs" />
+    <Compile Include="Google\Core Client\atomsource.cs" />
+    <Compile Include="Google\Core Client\atomtextconstruct.cs" />
+    <Compile Include="Google\Core Client\atomuri.cs" />
+    <Compile Include="Google\Core Client\authentication.cs" />
+    <Compile Include="Google\Core Client\authexceptions.cs" />
+    <Compile Include="Google\Core Client\authsubutil.cs" />
+    <Compile Include="Google\Core Client\basefeedparser.cs" />
+    <Compile Include="Google\Core Client\basenametable.cs" />
+    <Compile Include="Google\Core Client\batcherror.cs" />
+    <Compile Include="Google\Core Client\batcherrors.cs" />
+    <Compile Include="Google\Core Client\collections.cs" />
+    <Compile Include="Google\Core Client\documentquery.cs" />
+    <Compile Include="Google\Core Client\exceptions.cs" />
+    <Compile Include="Google\Core Client\extcollections.cs" />
+    <Compile Include="Google\Core Client\extensionbase.cs" />
+    <Compile Include="Google\Core Client\feedconstants.cs" />
+    <Compile Include="Google\Core Client\feedmodel.cs" />
+    <Compile Include="Google\Core Client\feedquery.cs" />
+    <Compile Include="Google\Core Client\gauthrequest.cs" />
+    <Compile Include="Google\Core Client\gauthsubrequest.cs" />
+    <Compile Include="Google\Core Client\gdatabatch.cs" />
+    <Compile Include="Google\Core Client\goauth2request.cs" />
+    <Compile Include="Google\Core Client\goauthrequest.cs" />
+    <Compile Include="Google\Core Client\HttpUtility.cs" />
+    <Compile Include="Google\Core Client\logrequest.cs" />
+    <Compile Include="Google\Core Client\mediaservice.cs" />
+    <Compile Include="Google\Core Client\mediasource.cs" />
+    <Compile Include="Google\Core Client\oauthbase.cs" />
+    <Compile Include="Google\Core Client\oauthparameters.cs" />
+    <Compile Include="Google\Core Client\oauthuri.cs" />
+    <Compile Include="Google\Core Client\oauthutil.cs" />
+    <Compile Include="Google\Core Client\request.cs" />
+    <Compile Include="Google\Core Client\resumableupload.cs" />
+    <Compile Include="Google\Core Client\rssfeedparser.cs" />
+    <Compile Include="Google\Core Client\service.cs" />
+    <Compile Include="Google\Core Client\serviceinterface.cs" />
+    <Compile Include="Google\Core Client\simplecontainer.cs" />
+    <Compile Include="Google\Core Client\simpleelement.cs" />
+    <Compile Include="Google\Core Client\tracing.cs" />
+    <Compile Include="Google\Core Client\utilities.cs" />
+    <Compile Include="Google\Core Client\versioninterface.cs" />
+    <Compile Include="Google\Core Client\xmlextension.cs" />
+    <Compile Include="Google\Common Data Extensions\apps.cs" />
+    <Compile Include="Google\Common Data Extensions\comments.cs" />
+    <Compile Include="Google\Common Data Extensions\contacts.cs" />
+    <Compile Include="Google\Common Data Extensions\entrylink.cs" />
+    <Compile Include="Google\Common Data Extensions\enumconstruct.cs" />
+    <Compile Include="Google\Common Data Extensions\exif.cs" />
+    <Compile Include="Google\Common Data Extensions\extended.cs" />
+    <Compile Include="Google\Common Data Extensions\feedlink.cs" />
+    <Compile Include="Google\Common Data Extensions\gdatanametable.cs" />
+    <Compile Include="Google\Common Data Extensions\georsswhere.cs" />
+    <Compile Include="Google\Common Data Extensions\labelcollection.cs" />
+    <Compile Include="Google\Common Data Extensions\mailitempropertycollection.cs" />
+    <Compile Include="Google\Common Data Extensions\mediarss.cs" />
+    <Compile Include="Google\Common Data Extensions\misc.cs" />
+    <Compile Include="Google\Common Data Extensions\originalevent.cs" />
+    <Compile Include="Google\Common Data Extensions\ratings.cs" />
+    <Compile Include="Google\Common Data Extensions\recurexception.cs" />
+    <Compile Include="Google\Common Data Extensions\recurrence.cs" />
+    <Compile Include="Google\Common Data Extensions\reminder.cs" />
+    <Compile Include="Google\Common Data Extensions\when.cs" />
+    <Compile Include="Google\Common Data Extensions\where.cs" />
+    <Compile Include="Google\Common Data Extensions\who.cs" />
+    <Compile Include="Google\Spreadsheets\cellentry.cs" />
+    <Compile Include="Google\Spreadsheets\cellfeed.cs" />
+    <Compile Include="Google\Spreadsheets\cellquery.cs" />
+    <Compile Include="Google\Spreadsheets\colcount.cs" />
+    <Compile Include="Google\Spreadsheets\gdataspreadsheetsnametable.cs" />
+    <Compile Include="Google\Spreadsheets\listentry.cs" />
+    <Compile Include="Google\Spreadsheets\listfeed.cs" />
+    <Compile Include="Google\Spreadsheets\listquery.cs" />
+    <Compile Include="Google\Spreadsheets\rowcount.cs" />
+    <Compile Include="Google\Spreadsheets\spreadsheetentry.cs" />
+    <Compile Include="Google\Spreadsheets\spreadsheetfeed.cs" />
+    <Compile Include="Google\Spreadsheets\spreadsheetquery.cs" />
+    <Compile Include="Google\Spreadsheets\spreadsheets.cs" />
+    <Compile Include="Google\Spreadsheets\spreadsheetservice.cs" />
+    <Compile Include="Google\Spreadsheets\worksheetentry.cs" />
+    <Compile Include="Google\Spreadsheets\worksheetfeed.cs" />
+    <Compile Include="Google\Spreadsheets\worksheetquery.cs" />
+    <Compile Include="HookObject.cs" />
+    <Compile Include="MenuItems.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SNUPlugin.cs" />
+    <Compile Include="UnityController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Google\Core Client\clientkey.sn" />
+    <None Include="Google\Common Data Extensions\extensionkey.sn" />
+    <None Include="Google\Spreadsheets\spreadsheets.sn" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

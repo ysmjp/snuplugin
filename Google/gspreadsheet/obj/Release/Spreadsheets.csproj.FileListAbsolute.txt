@@ -1,0 +1,27 @@
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\gspreadsheet\bin\Release\Google.GData.Spreadsheets.dll
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\gspreadsheet\bin\Release\gspreadsheet.xml
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\gspreadsheet\bin\Release\Google.GData.Client.dll
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\gspreadsheet\bin\Release\Google.GData.Extensions.dll
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\gspreadsheet\bin\Release\Newtonsoft.Json.dll
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\gspreadsheet\obj\Release\Spreadsheets.csprojAssemblyReference.cache
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\gspreadsheet\obj\Release\Spreadsheets.csproj.CoreCompileInputs.cache
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\gspreadsheet\obj\Release\Spreadsheets.csproj.CopyComplete
+C:\Users\YSM2\Documents\Google Data API SDK\Sources\Library\gspreadsheet\obj\Release\Google.GData.Spreadsheets.dll
+C:\Users\YSM2\Documents\Google Data API\Sources\Library\gspreadsheet\bin\Release\Google.GData.Spreadsheets.dll
+C:\Users\YSM2\Documents\Google Data API\Sources\Library\gspreadsheet\bin\Release\gspreadsheet.xml
+C:\Users\YSM2\Documents\Google Data API\Sources\Library\gspreadsheet\bin\Release\Google.GData.Client.dll
+C:\Users\YSM2\Documents\Google Data API\Sources\Library\gspreadsheet\bin\Release\Google.GData.Extensions.dll
+C:\Users\YSM2\Documents\Google Data API\Sources\Library\gspreadsheet\bin\Release\Newtonsoft.Json.dll
+C:\Users\YSM2\Documents\Google Data API\Sources\Library\gspreadsheet\obj\Release\Spreadsheets.csprojAssemblyReference.cache
+C:\Users\YSM2\Documents\Google Data API\Sources\Library\gspreadsheet\obj\Release\Spreadsheets.csproj.CoreCompileInputs.cache
+C:\Users\YSM2\Documents\Google Data API\Sources\Library\gspreadsheet\obj\Release\Spreadsheets.csproj.CopyComplete
+C:\Users\YSM2\Documents\Google Data API\Sources\Library\gspreadsheet\obj\Release\Google.GData.Spreadsheets.dll
+E:\VSProjects\SNUPlugin\Google\gspreadsheet\bin\Release\Google.GData.Spreadsheets.dll
+E:\VSProjects\SNUPlugin\Google\gspreadsheet\bin\Release\gspreadsheet.xml
+E:\VSProjects\SNUPlugin\Google\gspreadsheet\bin\Release\Google.GData.Client.dll
+E:\VSProjects\SNUPlugin\Google\gspreadsheet\bin\Release\Google.GData.Extensions.dll
+E:\VSProjects\SNUPlugin\Google\gspreadsheet\bin\Release\Newtonsoft.Json.dll
+E:\VSProjects\SNUPlugin\Google\gspreadsheet\obj\Release\Spreadsheets.csprojAssemblyReference.cache
+E:\VSProjects\SNUPlugin\Google\gspreadsheet\obj\Release\Spreadsheets.csproj.CoreCompileInputs.cache
+E:\VSProjects\SNUPlugin\Google\gspreadsheet\obj\Release\Spreadsheets.csproj.CopyComplete
+E:\VSProjects\SNUPlugin\Google\gspreadsheet\obj\Release\Google.GData.Spreadsheets.dll

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNUPlugin", "SNUPlugin\SNUPlugin.csproj", "{01E18074-CC3A-4767-88F9-6ABA6FC5BC1E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		ASP|Any CPU = ASP|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01E18074-CC3A-4767-88F9-6ABA6FC5BC1E}.ASP|Any CPU.ActiveCfg = Release|Any CPU
+		{01E18074-CC3A-4767-88F9-6ABA6FC5BC1E}.ASP|Any CPU.Build.0 = Release|Any CPU
+		{01E18074-CC3A-4767-88F9-6ABA6FC5BC1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01E18074-CC3A-4767-88F9-6ABA6FC5BC1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01E18074-CC3A-4767-88F9-6ABA6FC5BC1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01E18074-CC3A-4767-88F9-6ABA6FC5BC1E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {42BEF8B0-834D-4D0A-82E2-9C1DF69EB14F}
+	EndGlobalSection
+EndGlobal
