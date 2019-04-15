@@ -244,7 +244,8 @@ namespace Google.GData.Client.ResumableUpload {
             string contentRange = String.Format("bytes */*");
             request.Headers.Set(HttpRequestHeader.ContentRange, contentRange);
             request.ContentLength = 0;
-            ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
+            //ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
 
             // now parse the header
@@ -493,7 +494,8 @@ namespace Google.GData.Client.ResumableUpload {
             request.ContentType = mediaType;
             CopyData(payload, request, partIndex, data, sessionUri);
 
-            ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
+            //ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
             return response;
         }
@@ -622,7 +624,8 @@ namespace Google.GData.Client.ResumableUpload {
             // Zero the content length
             request.ContentLength = 0;
 
-            ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
+            //ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
             WebResponse response = request.GetResponse();
             return new Uri(response.Headers["Location"]);
         }

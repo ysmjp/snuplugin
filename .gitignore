@@ -1,3 +1,7 @@
 #private credentials
 #check out https://developers.google.com/sheets/api/quickstart/dotnet?refresh=1
 credentials.json
+
+#cache
+SNUPlugin/obj/Debug/SNUPlugin.csproj.CoreCompileInputs.cache
+SNUPlugin/obj/Release/SNUPlugin.csproj.CoreCompileInputs.cache

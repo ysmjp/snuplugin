@@ -7,6 +7,7 @@ using System.Net;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
@@ -441,6 +442,7 @@ namespace Google.GData.Client {
             Uri requestUri = new Uri(parameters.TokenUri);
             WebRequest request = WebRequest.Create(requestUri);
             
+            
             request.Method = "POST";
 
             request.ContentType = "application/x-www-form-urlencoded";
@@ -451,14 +453,23 @@ namespace Google.GData.Client {
             w.Flush();
             w.Close();
 
-            ServicePointManager.ServerCertificateValidationCallback = MyRemoteCertificateValidationCallback;
-            WebResponse response = request.GetResponse();
+            //ServicePointManager.ServerCertificateValidationCallback = MyRemoteCertificateValidationCallback;
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
+            //WebResponse response = request.GetResponse();
+            UnityWebRequest response = UnityWebRequest.Post(parameters.TokenUri, requestBody);
+            response.Send();
             string result = "";
             if (response != null) {
-                Stream responseStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(responseStream);
-                result = reader.ReadToEnd();
-                
+                //https://docs.unity3d.com/kr/2017.4/Manual/UnityWebRequest-SendingForm.html
+
+                //Stream responseStream = response.GetResponseStream();
+
+                //StreamReader reader = new StreamReader(responseStream);
+                //result = reader.ReadToEnd();
+
+                EditorUtility.DisplayDialog("", response.ToString(), "");
+                result = response.ToString();
+
                 //Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
                 Dictionary<string, string> dict = JsonUtility.FromJson<Dictionary<string, string>>(result);
 
@@ -480,7 +491,6 @@ namespace Google.GData.Client {
         public static bool MyRemoteCertificateValidationCallback(System.Object sender,
             X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
-            return true;
             
             bool isOk = true;
             // If there are errors in the certificate chain,

@@ -116,7 +116,8 @@ namespace Google.GData.Client {
             WebRequest request = WebRequest.Create(requestUri);
             request.Headers.Add(headers);
 
-            ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
+            //ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
             WebResponse response = request.GetResponse();
             string result = "";
             if (response != null) {
@@ -184,7 +185,8 @@ namespace Google.GData.Client {
             WebRequest request = WebRequest.Create(requestUri);
             request.Headers.Add(headers);
 
-            ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
+            //ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
             WebResponse response = request.GetResponse();
             string result = "";
             if (response != null) {

@@ -558,7 +558,8 @@ namespace Google.GData.Client {
 
                 Tracing.TraceCall("calling the real execution over the webresponse");
                 LogRequest(this.webRequest);
-                ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
+                //ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
+                System.Net.ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
                 this.webResponse = this.webRequest.GetResponse();
             } catch (WebException e) {
                 Tracing.TraceCall("GDataRequest::Execute failed: " + this.targetUri.ToString());
