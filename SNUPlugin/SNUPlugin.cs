@@ -6,6 +6,8 @@ using UnityEditor;
 using Google.GData.Client; //Google Sheets Api v3(legacy)
 using Google.GData.Spreadsheets;
 //for google sheets api v3, see https://developers.google.com/sheets/api/v3/authorize
+using UnityEngine.Networking;
+using System.Collections;
 
 //process flow
 //getAuthorizedService() -> requestSheets()

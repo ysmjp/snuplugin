@@ -154,6 +154,7 @@
     <Compile Include="MenuItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SNUPlugin.cs" />
+    <Compile Include="SNUWebRequest.cs" />
     <Compile Include="UnityController.cs" />
   </ItemGroup>
   <ItemGroup>

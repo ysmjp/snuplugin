@@ -116,15 +116,16 @@ namespace Google.GData.Client {
             WebRequest request = WebRequest.Create(requestUri);
             request.Headers.Add(headers);
 
-            //ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
-            System.Net.ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
-            WebResponse response = request.GetResponse();
-            string result = "";
+            //WebResponse response = request.GetResponse();
+            //string result = "";
+            string result = SNUPlugin.SNUWebRequest.staticGet(requestUri.ToString());
+            /*
             if (response != null) {
                 Stream responseStream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(responseStream);
                 result = reader.ReadToEnd();
             }
+            */
 
             if (callbackExists) {
                 parameters.BaseProperties.Remove(OAuthBase.OAuthCallbackKey);
@@ -185,15 +186,16 @@ namespace Google.GData.Client {
             WebRequest request = WebRequest.Create(requestUri);
             request.Headers.Add(headers);
 
-            //ServicePointManager.ServerCertificateValidationCallback = OAuthBase.MyRemoteCertificateValidationCallback;
-            System.Net.ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
-            WebResponse response = request.GetResponse();
-            string result = "";
+            //WebResponse response = request.GetResponse();
+            //string result = "";
+            string result = SNUPlugin.SNUWebRequest.staticGet(requestUri.ToString());
+            /*
             if (response != null) {
                 Stream responseStream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(responseStream);
                 result = reader.ReadToEnd();
             }
+            */
 
             //split results and update parameters
             SortedDictionary<string, string> responseValues = OAuthBase.GetQueryParameters(result);
