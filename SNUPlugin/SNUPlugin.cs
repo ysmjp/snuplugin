@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms; //platform-dependant
 using System.IO;
 using UnityEngine;
@@ -13,6 +12,7 @@ namespace SNUPlugin
     public class SNUPlugin : MonoBehaviour
     {
         private List<Proposal> myProposal = new List<Proposal>();
+        private readonly object NothingFound = new object();
 
         void OnStart()
         {
@@ -36,10 +36,10 @@ namespace SNUPlugin
         bool importSheet(string path)
         {
             DobrainGameType dbGameType;
+            Proposal prop;
             if (!(new FileInfo(path)).Exists)
                 return false;
             //load spreadsheet
-            Debug.Log("importSheet: entry");
             Workbook book = new Workbook(path);
             if (book == null)
             {
@@ -58,11 +58,15 @@ namespace SNUPlugin
                 dbGameType = getGameType(sh);
                 if (dbGameType != DobrainGameType.Undefined)
                 {
-                    myProposal.Add(new Proposal() {
-                        filename = path,
-                        gametype = dbGameType
-                    });
-                    Debug.Log(sh.Name + ":" + dbGameType.ToString());
+                    prop = new Proposal()
+                    {
+                        Filename = path,
+                        GameType = dbGameType,
+                        DevelopmentType = getDevelopmentType(sh),
+                        DevelopmentSubtype = getDevelopmentSubtype(sh)
+                    };
+                    myProposal.Add(prop);
+                    Debug.Log(sh.Name + ":" + prop.GameType.ToString() + "," + prop.DevelopmentType.ToString() + "," + prop.DevelopmentSubtype);
                 }
             }
             if (myProposal.Count == 0)
@@ -75,21 +79,36 @@ namespace SNUPlugin
 
         DobrainGameType getGameType(Worksheet sh)
         {
+            return findCells(sh, "문제유형", "차수", 8, 0, convertToGameType);
+        }
+
+        DobrainDevelopmentType getDevelopmentType(Worksheet sh)
+        {
+            return findCells(sh, "항목", "유형", 1, 0, convertToDevelopmentType);
+        }
+
+        string getDevelopmentSubtype(Worksheet sh)
+        {
+            return findCells(sh, "유형", "공통영역", 7, 0, convertToDevelopmentSubtype);
+        }
+
+        T findCells<T>(Worksheet sh, string matchTitle, string excludedTitle, int startRow, int startCol, Func<string, T> convertFunction)
+        {
             bool boolFound = false;
             int targetRow = 0, targetCol = 0;
             string strFormula, strValue;
-            DobrainGameType dbGameType;
+            T res;
             //Debug.Log("getGameType: " + sh.Name + ": rows " + sh.Rows.Count + ", cols " + sh.Rows[0].Cells.Count);
-            for (int col = 0; col < 3; col++)
+            for (int col = startCol; col < startCol + 3; col++)
             {
-                for (int row = 8; row < 13; row++)
+                for (int row = startRow; row < startRow + 5; row++)
                 {
                     if (row >= sh.Rows.Count || sh.Rows[row] == null || col >= sh.Rows[row].Cells.Count || sh.Rows[row].Cells[col] == null)
                         continue;
                     strFormula = sh.Rows[row].Cells[col].ToString();
                     strFormula = getTrimmedString(getNormalString(strFormula));
                     //Debug.Log(row + "," + col + ":" + strFormula);
-                    if (strFormula == "문제유형")
+                    if (strFormula == matchTitle)
                     {
                         boolFound = true;
                         targetRow = row;
@@ -100,7 +119,7 @@ namespace SNUPlugin
                 if (boolFound) break;
             }
             if (!boolFound)
-                return DobrainGameType.Undefined;
+                return convertFunction("undefined");
             //Debug.Log("getGameType: found offset " + targetRow + "," + targetCol);
             for (int row = targetRow + 1; row < targetRow + 6; row++)
             {
@@ -111,8 +130,8 @@ namespace SNUPlugin
                     strFormula = sh.Rows[row].Cells[col].ToString();
                     strFormula = getTrimmedString(getNormalString(strFormula));
                     //Debug.Log(row + "," + col + ":" + strFormula);
-                    if (strFormula == "차수")
-                        return DobrainGameType.Undefined;
+                    if (strFormula == excludedTitle)
+                        return convertFunction("none");
                     if (strFormula == "1" || strFormula == "0")
                         continue;
                     if (row + 1 >= sh.Rows.Count || sh.Rows[row + 1] == null || col >= sh.Rows[row + 1].Cells.Count || sh.Rows[row + 1].Cells[col] == null)
@@ -122,19 +141,21 @@ namespace SNUPlugin
                     //Debug.Log("match: " + (row + 1) + "," + col + ":" + strValue);
                     if (strValue != "1") //true
                         continue;
-                    dbGameType = convertToGameType(strFormula);
-                    if (dbGameType != DobrainGameType.None)
-                        return dbGameType;
+                    res = convertFunction(strFormula);
+                    if (!res.Equals(convertFunction("none")))
+                        return res;
                 }
             }
-            return DobrainGameType.None;
+            return convertFunction("none");
         }
 
         DobrainGameType convertToGameType(string value)
         {
             switch (value)
             {
-                case "":
+                case "undefined":
+                    return DobrainGameType.Undefined;
+                case "none":
                     return DobrainGameType.None;
                 case "다지선일":
                     return DobrainGameType.ChoiceOne;
@@ -170,7 +191,40 @@ namespace SNUPlugin
                     return DobrainGameType.None;
             }
         }
+        DobrainDevelopmentType convertToDevelopmentType(string value)
+        {
+            switch (value)
+            {
+                case "undefined":
+                    return DobrainDevelopmentType.Undefined;
+                case "none":
+                    return DobrainDevelopmentType.None;
+                case "지각속도력":
+                    return DobrainDevelopmentType.PerceptionSpeed;
+                case "공간지각력":
+                    return DobrainDevelopmentType.SpatialPerception;
+                case "수리력":
+                    return DobrainDevelopmentType.Mathematical;
+                case "창의력":
+                    return DobrainDevelopmentType.Creative;
+                case "시각적변별력":
+                    return DobrainDevelopmentType.VisualDiscrimination;
+                case "기억력":
+                    return DobrainDevelopmentType.Memory;
+                case "구성력":
+                    return DobrainDevelopmentType.Compositive;
+                case "추론력":
+                    return DobrainDevelopmentType.Inferential;
+                default:
+                    return DobrainDevelopmentType.None;
+            }
 
+        }
+
+        string convertToDevelopmentSubtype(string value)
+        {
+            return value;
+        }
         string getNormalString(string value)
         {
             string strPattern = @"(?=\<)(.*?)(?<=\>)";
@@ -188,9 +242,12 @@ namespace SNUPlugin
 
     class Proposal
     {
-        public string filename;
-        public DobrainGameType gametype;
-
+        public string Filename; //파일 주소
+        public int ContentsIndex = 0; //컨텐츠 번호
+        public int QuestionIndex = 0; //문제 번호
+        public DobrainDevelopmentType DevelopmentType; //항목
+        public string DevelopmentSubtype = ""; //유형
+        public DobrainGameType GameType; //문제 유형
     }
 
     //can be generalized by config.json
@@ -213,5 +270,20 @@ namespace SNUPlugin
         PilingBlocks, //블록쌓기,
         FlipingCards, //카드뒤집기,
         Other, //기타
+    }
+
+
+    enum DobrainDevelopmentType
+    {
+        Undefined,
+        None,
+        PerceptionSpeed, //지각속도력
+        SpatialPerception, //공간지각력
+        Mathematical, //수리력
+        Creative, //창의력
+        VisualDiscrimination,//시각적변별력
+        Memory, //기억력
+        Compositive, //구성력
+        Inferential //추론력
     }
 }
