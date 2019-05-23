@@ -5,3 +5,7 @@ credentials.json
 #cache
 SNUPlugin/obj/Debug/SNUPlugin.csproj.CoreCompileInputs.cache
 SNUPlugin/obj/Release/SNUPlugin.csproj.CoreCompileInputs.cache
+.vs/SNUPlugin/v16/Server/sqlite3/db.lock
+
+#backup
+SNUPlugin_190523_backup.7z

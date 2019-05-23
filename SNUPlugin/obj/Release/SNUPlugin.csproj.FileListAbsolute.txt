@@ -7,3 +7,5 @@ E:\VSProjects\SNUPlugin\SNUPlugin\bin\Release\UnityEngine.dll
 E:\VSProjects\SNUPlugin\SNUPlugin\obj\Release\SNUPlugin.csproj.CopyComplete
 E:\VSProjects\SNUPlugin\SNUPlugin\obj\Release\SNUPlugin.dll
 E:\VSProjects\SNUPlugin\SNUPlugin\obj\Release\SNUPlugin.pdb
+E:\VSProjects\SNUPlugin\SNUPlugin\bin\Release\Independentsoft.Office.Spreadsheet.dll
+E:\VSProjects\SNUPlugin\SNUPlugin\bin\Release\Independentsoft.Office.Spreadsheet.xml
