@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms; //platform-dependant
+//using System.Windows.Forms; //platform-dependant
 using System.IO;
 using UnityEngine;
 using UnityEditor;
@@ -14,19 +14,28 @@ namespace SNUPlugin
         private List<Proposal> myProposal = new List<Proposal>();
         private readonly object NothingFound = new object();
 
+
+
         void OnStart()
         {
             Debug.Log("SNUPlugin initialized.");
         }
 
+        public void destroyObject(UnityEngine.Object obj)
+        {
+            if (obj == null) return;
+            if (Application.isEditor)
+                DestroyImmediate(obj);
+            else
+                Destroy(obj);
+        }
+
         public bool openDialog()
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "기획서 파일을 선택해주세요.";
-            ofd.Filter = "스프레드시트 파일(*.xlsx;*.xls)|*.xlsx;*.xls";
-            if (ofd.ShowDialog() == DialogResult.OK)
+            string path = EditorUtility.OpenFilePanel("기획서 파일을 선택해주세요.", "", "xlsx");
+            if (path.Length != 0)
             {
-                if (!importSheet(ofd.FileName))
+                if (!importSheet(path))
                     return false;
                 return true;
             }
@@ -68,7 +77,7 @@ namespace SNUPlugin
                         QuestionIndex = getQuestionIndex(sh)
                     };
                     myProposal.Add(prop);
-                    Debug.Log(sh.Name + ":" + prop.GameType.ToString() + "," + prop.DevelopmentType.ToString() + "," + prop.DevelopmentSubtype + "," + prop.ContentsIndex.ToString() + "," + prop.QuestionIndex.ToString());
+                    Debug.Log("[" + prop.SimpleFilename + "]" + sh.Name + ":" + prop.GameType.ToString() + "," + prop.DevelopmentType.ToString() + "," + prop.DevelopmentSubtype + "," + prop.ContentsIndex.ToString() + "," + prop.QuestionIndex.ToString());
                 }
             }
             if (myProposal.Count == 0)
@@ -281,7 +290,15 @@ namespace SNUPlugin
 
     class Proposal
     {
-        public string Filename; //파일 주소
+        public string Filename {
+            get { return _Filename; }
+            set {
+                _Filename = value;
+                SimpleFilename = Path.GetFileName(value);
+            }
+        } //파일 주소
+        private string _Filename; //inner memeber
+        public string SimpleFilename; //파일 이름
         public int ContentsIndex = 0; //컨텐츠 번호
         public int QuestionIndex = 0; //문제 번호
         public DobrainDevelopmentType DevelopmentType; //항목

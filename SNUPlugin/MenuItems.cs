@@ -12,8 +12,10 @@ namespace SNUPlugin
         [MenuItem("Dobrain/SNUPlugin")]
         private static void menuSNUPlugin()
         {
+            UnityEngine.Object prevInst = GameObject.Find("SNUPlugin");
             var obj = new GameObject("SNUPlugin");
             SNUPlugin inst = obj.AddComponent<SNUPlugin>();
+            inst.destroyObject(prevInst);
             inst.openDialog();
             //var obj = new GameObject("SNUPlugin");
             //SNUPlugin inst = obj.AddComponent<SNUPlugin>();
