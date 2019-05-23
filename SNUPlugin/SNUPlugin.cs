@@ -63,16 +63,21 @@ namespace SNUPlugin
                         Filename = path,
                         GameType = dbGameType,
                         DevelopmentType = getDevelopmentType(sh),
-                        DevelopmentSubtype = getDevelopmentSubtype(sh)
+                        DevelopmentSubtype = getDevelopmentSubtype(sh),
+                        ContentsIndex = getContentsIndex(sh),
+                        QuestionIndex = getQuestionIndex(sh)
                     };
                     myProposal.Add(prop);
-                    Debug.Log(sh.Name + ":" + prop.GameType.ToString() + "," + prop.DevelopmentType.ToString() + "," + prop.DevelopmentSubtype);
+                    Debug.Log(sh.Name + ":" + prop.GameType.ToString() + "," + prop.DevelopmentType.ToString() + "," + prop.DevelopmentSubtype + "," + prop.ContentsIndex.ToString() + "," + prop.QuestionIndex.ToString());
                 }
             }
             if (myProposal.Count == 0)
             {
                 EditorUtility.DisplayDialog("SNUPlugin", "올바른 기획서 파일이 아닙니다.", "닫기");
                 return false;
+            } else
+            {
+                EditorUtility.DisplayDialog("SNUPlugin", myProposal.Count.ToString() + "개의 문제가 로드되었습니다.", "닫기");
             }
             return true;
         }
@@ -89,10 +94,37 @@ namespace SNUPlugin
 
         string getDevelopmentSubtype(Worksheet sh)
         {
-            return findCells(sh, "유형", "공통영역", 4, 0, convertToDevelopmentSubtype);
+            return findCells(sh, "유형", "공통영역", 4, 0, convertToString);
+        }
+
+        int getContentsIndex(Worksheet sh)
+        {
+            try
+            {
+                return int.Parse(findCells(sh, "콘텐츠번호", "", 0, 0, convertToString, true));
+            } catch
+            {
+                return -1;
+            }
+        }
+
+        int getQuestionIndex(Worksheet sh)
+        {
+            try
+            {
+                return int.Parse(findCells(sh, "문제번호", "", 0, 3, convertToString, true));
+            }
+            catch
+            {
+                return -1;
+            }
         }
 
         T findCells<T>(Worksheet sh, string matchTitle, string excludedTitle, int startRow, int startCol, Func<string, T> convertFunction)
+        {
+            return findCells(sh, matchTitle, excludedTitle, startRow, startCol, convertFunction, false);
+        }
+        T findCells<T>(Worksheet sh, string matchTitle, string excludedTitle, int startRow, int startCol, Func<string, T> convertFunction, bool justGet)
         {
             bool boolFound = false;
             int targetRow = 0, targetCol = 0;
@@ -110,10 +142,21 @@ namespace SNUPlugin
                     //Debug.Log(row + "," + col + ":" + strFormula);
                     if (strFormula == matchTitle)
                     {
-                        boolFound = true;
-                        targetRow = row;
-                        targetCol = col;
-                        break;
+                        if (justGet)
+                        {
+                            if (row + 1 >= sh.Rows.Count || sh.Rows[row + 1] == null || col >= sh.Rows[row + 1].Cells.Count || sh.Rows[row + 1].Cells[col] == null)
+                                return convertFunction("undefined");
+                            strFormula = sh.Rows[row + 1].Cells[col].ToString();
+                            strFormula = getTrimmedString(getNormalString(strFormula));
+                            return convertFunction(strFormula);
+                        }
+                        else
+                        {
+                            boolFound = true;
+                            targetRow = row;
+                            targetCol = col;
+                            break;
+                        }
                     }
                 }
                 if (boolFound) break;
@@ -148,7 +191,6 @@ namespace SNUPlugin
             }
             return convertFunction("none");
         }
-
         DobrainGameType convertToGameType(string value)
         {
             switch (value)
@@ -220,8 +262,7 @@ namespace SNUPlugin
             }
 
         }
-
-        string convertToDevelopmentSubtype(string value)
+        string convertToString(string value)
         {
             return value;
         }
@@ -232,12 +273,10 @@ namespace SNUPlugin
                 value = Regex.Replace(value, strPattern, "");
             return value;
         }
-
         string getTrimmedString(string value)
         {
             return value.Replace("\n", "").Replace("\r", "").Replace(" ", "").ToLower();
         }
-        
     }
 
     class Proposal
@@ -271,7 +310,6 @@ namespace SNUPlugin
         FlipingCards, //카드뒤집기,
         Other, //기타
     }
-
 
     enum DobrainDevelopmentType
     {
