@@ -110,7 +110,7 @@ namespace SNUPlugin
         {
             try
             {
-                return int.Parse(findCells(sh, "콘텐츠번호", "", 0, 0, convertToString, true));
+                return (int)(float.Parse(findCells(sh, "콘텐츠번호", "", 0, 0, convertToString, true)));
             } catch
             {
                 return -1;
@@ -121,7 +121,7 @@ namespace SNUPlugin
         {
             try
             {
-                return int.Parse(findCells(sh, "문제번호", "", 0, 3, convertToString, true));
+                return (int)float.Parse(findCells(sh, "문제번호", "", 0, 3, convertToString, true));
             }
             catch
             {
@@ -157,6 +157,7 @@ namespace SNUPlugin
                                 return convertFunction("undefined");
                             strFormula = sh.Rows[row + 1].Cells[col].ToString();
                             strFormula = getTrimmedString(getNormalString(strFormula));
+                            //Debug.Log(strFormula);
                             return convertFunction(strFormula);
                         }
                         else
