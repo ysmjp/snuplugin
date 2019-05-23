@@ -89,7 +89,7 @@ namespace SNUPlugin
 
         string getDevelopmentSubtype(Worksheet sh)
         {
-            return findCells(sh, "유형", "공통영역", 7, 0, convertToDevelopmentSubtype);
+            return findCells(sh, "유형", "공통영역", 4, 0, convertToDevelopmentSubtype);
         }
 
         T findCells<T>(Worksheet sh, string matchTitle, string excludedTitle, int startRow, int startCol, Func<string, T> convertFunction)
