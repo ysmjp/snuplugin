@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using UnityEngine;
 using UnityEngine;
 using UnityEditor;
 
@@ -11,13 +14,14 @@ namespace SNUPlugin
         //generate prefab
         public bool generate(SNUPlugin snuplugin, List<Proposal> proposalList)
         {
-            string strDir, strPath, strObjectName, strQManagerName, strQManagerPath;
+            string strDir, strPath, strObjectName, strQManagerName;
             int intSuccess = 0;
             Proposal prop;
-            GameObject obj;
+            GameObject objQuestion = null, objQManager = null, objExplanation = null, objExample = null, objElement = null;
+            List<GameObject> lstObjExample = new List<GameObject>(), lstObjElement = new List<GameObject>();
+            GameObject[] objStep = new GameObject[6];
             if (proposalList.Count == 0) return false;
-            //strDir = "Assets/Contents/Resources/Weekday/" + proposalList[0].ContentsIndex.ToString();
-            strDir = "Assets/Contents/Resources/Weekday/105";
+            strDir = "Assets/Contents/Resources/Weekday/" + proposalList[0].ContentsIndex.ToString();
             if (!mkdir(strDir)) return false; //fail to make direcotry
             for (int i = 0; i < proposalList.Count; i++) //loop thru proposal list
             {
@@ -25,32 +29,197 @@ namespace SNUPlugin
                 strObjectName = "ch" + prop.ContentsIndex.ToString() + "_" + prop.QuestionIndex.ToString();
                 strPath = strDir + "/" + strObjectName + ".prefab";
                 strQManagerName = getQManagerName(prop);
-                strQManagerPath = $"Assets/Contents/Scripts/Question/Weekday/{strQManagerName}.cs";
-                Debug.Log($"SNUPlugin: Trying to instantiate {strQManagerPath}");
                 if (strQManagerName == "undefined")
                 {
-                    obj = new GameObject(strObjectName);
+                    objQuestion = new GameObject(strObjectName);
                 }
                 else
                 {
-                    //obj = UnityEngine.Object.Instantiate(GameObject.Find(strQManager)); //clone question manager
-                    //obj = Resources.Load<GameObject>(strQManagerPath);
-                    //obj = new GameObject(strObjectName);
-                    //obj.AddComponent(Resources.Load(strQManagerPath).GetType());
+                    objQuestion = new GameObject(strObjectName); //ch#_#
 
-                    //obj = AssetDatabase.LoadAssetAtPath<GameObject>(strQManagerPath);
+                    objQManager = new GameObject(strQManagerName); //*QManager
+                    AddComponentExt(objQManager, strQManagerName);
+                    //objQManager.transform.parent = objQuestion.transform;
+                    objQManager.transform.SetParent(objQManager.transform);
 
-                    //obj = (GameObject)UnityEngine.Object.Instantiate(Resources.Load(strQManagerPath)); //clone question manager
-                    obj = UnityEngine.Object.Instantiate(AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>(strQManagerPath)); //clone question manager
-                    obj.name = strObjectName;
-                    obj.GetComponent("Explanation Board").name = strQManagerName;
+                    objExplanation = new GameObject("Explanation Board");
+                    objExplanation.GetComponent<RectTransform>().sizeDelta = new Vector2(1030, 740);
+                    objExplanation.AddComponent<CanvasRenderer>();
+                    AddComponentExt(objExplanation, "Image");
+                    //objExplanation.transform.parent = objQManager.transform;
+                    objExplanation.transform.SetParent(objQManager.transform);
+
+                    for (int j = 0; j < 6; j++)
+                    {
+                        objStep[j] = new GameObject("Step" + (j > 0 ? $" ({j})" : ""));
+                        AddComponentExt(objStep[j], "DerivedQuestion");
+                        objStep[j].AddComponent<Animator>();
+                        //objStep[j].transform.parent = objQManager.transform;
+                        objStep[j].transform.SetParent(objQManager.transform);
+
+                        objExample = new GameObject("Example");
+                        //objExample.transform.parent = objStep[j].transform;
+                        objExample.transform.SetParent(objStep[j].transform);
+                        lstObjExample.Add(objExample);
+
+                        objElement = new GameObject("Element");
+                        //objElement.transform.parent = objStep[j].transform;
+                        objElement.transform.SetParent(objStep[j].transform);
+                        lstObjElement.Add(objElement);
+
+                        objElement = new GameObject("Element (1)");
+                        //objElement.transform.parent = objStep[j].transform;
+                        objElement.transform.SetParent(objStep[j].transform);
+                        lstObjElement.Add(objElement);
+                    }
+
                 }
-                createPrefab(obj, strPath); //create and save prefab
-                snuplugin.destroyObject(obj);
+                createPrefab(objQuestion, strPath); //create and save prefab
+                for (int j = 0; j < 6; j++)
+                        snuplugin.destroyObject(objStep[j]);
+                foreach (GameObject obj in lstObjExample)
+                    snuplugin.destroyObject(obj);
+                foreach (GameObject obj in lstObjElement)
+                    snuplugin.destroyObject(obj);
+                snuplugin.destroyObject(objExplanation);
+                snuplugin.destroyObject(objQManager);
+                snuplugin.destroyObject(objQuestion);
                 intSuccess++;
             }
-            EditorUtility.DisplayDialog("SNUPlugin", $"{Path.GetFileName(proposalList[0].Filename)}을 로드하여\n{proposalList[0].ContentsIndex.ToString()}번 컨텐츠에 해당하는 {intSuccess}개의 Prefab을 생성하였습니다.\n{strDir} 폴더를 확인해주세요.", "닫기");
+            EditorUtility.DisplayDialog("SNUPlugin", $"{Path.GetFileName(proposalList[0].Filename)}:\n{strDir}에\n{proposalList[0].ContentsIndex.ToString()}번 컨텐츠의 Prefab {intSuccess}개를 생성하였습니다.", "닫기");
             return true;
+        }
+
+        public Component AddComponentExt(GameObject obj, string scriptName)
+        {
+            Component cmpnt = null;
+
+
+            for (int i = 0; i < 10; i++)
+            {
+                //If call is null, make another call
+                cmpnt = _AddComponentExt(obj, scriptName, i);
+
+                //Exit if we are successful
+                if (cmpnt != null)
+                {
+                    break;
+                }
+            }
+
+
+            //If still null then let user know an exception
+            if (cmpnt == null)
+            {
+                Debug.LogError("Failed to Add Component");
+                return null;
+            }
+            return cmpnt;
+        }
+
+        private Component _AddComponentExt(GameObject obj, string className, int trials)
+        {
+            //Any script created by user(you)
+            const string userMadeScript = "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
+            //Any script/component that comes with Unity such as "Rigidbody"
+            const string builtInScript = "UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
+
+            //Any script/component that comes with Unity such as "Image"
+            const string builtInScriptUI = "UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+
+            //Any script/component that comes with Unity such as "Networking"
+            const string builtInScriptNetwork = "UnityEngine.Networking, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+
+            //Any script/component that comes with Unity such as "AnalyticsTracker"
+            const string builtInScriptAnalytics = "UnityEngine.Analytics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
+
+            //Any script/component that comes with Unity such as "AnalyticsTracker"
+            const string builtInScriptHoloLens = "UnityEngine.HoloLens, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
+
+            Assembly asm = null;
+
+            try
+            {
+                //Decide if to get user script or built-in component
+                switch (trials)
+                {
+                    case 0:
+
+                        asm = Assembly.Load(userMadeScript);
+                        break;
+
+                    case 1:
+                        //Get UnityEngine.Component Typical component format
+                        className = "UnityEngine." + className;
+                        asm = Assembly.Load(builtInScript);
+                        break;
+                    case 2:
+                        //Get UnityEngine.Component UI format
+                        className = "UnityEngine.UI." + className;
+                        asm = Assembly.Load(builtInScriptUI);
+                        break;
+
+                    case 3:
+                        //Get UnityEngine.Component Video format
+                        className = "UnityEngine.Video." + className;
+                        asm = Assembly.Load(builtInScript);
+                        break;
+
+                    case 4:
+                        //Get UnityEngine.Component Networking format
+                        className = "UnityEngine.Networking." + className;
+                        asm = Assembly.Load(builtInScriptNetwork);
+                        break;
+                    case 5:
+                        //Get UnityEngine.Component Analytics format
+                        className = "UnityEngine.Analytics." + className;
+                        asm = Assembly.Load(builtInScriptAnalytics);
+                        break;
+
+                    case 6:
+                        //Get UnityEngine.Component EventSystems format
+                        className = "UnityEngine.EventSystems." + className;
+                        asm = Assembly.Load(builtInScriptUI);
+                        break;
+
+                    case 7:
+                        //Get UnityEngine.Component Audio format
+                        className = "UnityEngine.Audio." + className;
+                        asm = Assembly.Load(builtInScriptHoloLens);
+                        break;
+
+                    case 8:
+                        //Get UnityEngine.Component SpatialMapping format
+                        className = "UnityEngine.VR.WSA." + className;
+                        asm = Assembly.Load(builtInScriptHoloLens);
+                        break;
+
+                    case 9:
+                        //Get UnityEngine.Component AI format
+                        className = "UnityEngine.AI." + className;
+                        asm = Assembly.Load(builtInScript);
+                        break;
+                }
+            }
+            catch
+            {
+                //Debug.Log("Failed to Load Assembly" + e.Message);
+            }
+
+            //Return if Assembly is null
+            if (asm == null)
+            {
+                return null;
+            }
+
+            //Get type then return if it is null
+            Type type = asm.GetType(className);
+            if (type == null)
+                return null;
+
+            //Finally Add component since nothing is null
+            Component cmpnt = obj.AddComponent(type);
+            return cmpnt;
         }
 
         //get question manager name
@@ -83,9 +252,9 @@ namespace SNUPlugin
             switch (proposal.GameType)
             {
                 case DobrainGameType.Undefined:
-                    return "undefined";//default
+                    return "QuestionManager";//default
                 case DobrainGameType.None:
-                    return "undefined";//default
+                    return "QuestionManager";//default
                 case DobrainGameType.ChoiceOne:
                     return "ClickOneQManager";
                 case DobrainGameType.MoleMoving:
@@ -115,9 +284,9 @@ namespace SNUPlugin
                 case DobrainGameType.FlipingCards:
                     return "CardFlipQManager";
                 case DobrainGameType.Other:
-                    return "undefined";//default
+                    return "QuestionManager";//default
                 default:
-                    return "undefined"; //default
+                    return "QuestionManager"; //default
             }
         }
 

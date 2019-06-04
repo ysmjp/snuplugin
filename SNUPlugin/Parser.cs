@@ -58,7 +58,7 @@ namespace SNUPlugin
             }
             else
             {
-                EditorUtility.DisplayDialog("SNUPlugin", proposalList.Count.ToString() + "개의 문제가 로드되었습니다.", "닫기");
+                //EditorUtility.DisplayDialog("SNUPlugin", proposalList.Count.ToString() + "개의 문제가 로드되었습니다.", "닫기");
             }
             return true;
         }
