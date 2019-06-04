@@ -19,9 +19,9 @@ namespace SNUPlugin
             inst.openDialog(); //open xlsx
             try
             {
-                UnityEngine.Object.Destroy(inst); //delete itself
-                UnityEngine.Object.DestroyImmediate(inst);
-                UnityEngine.Object.DestroyObject(inst);
+                UnityEngine.Object.Destroy(obj); //delete itself
+                UnityEngine.Object.DestroyImmediate(obj);
+                UnityEngine.Object.DestroyObject(obj);
             } catch
             { }
         }
