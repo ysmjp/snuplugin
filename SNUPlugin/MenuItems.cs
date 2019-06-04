@@ -9,7 +9,7 @@ namespace SNUPlugin
 {
     public class MenuItems
     {
-        [MenuItem("Dobrain/SNUPlugin")]
+        [MenuItem("Dobrain/Generate Prefab From XLSX")]
         private static void menuSNUPlugin()
         {
             UnityEngine.Object prevInst = GameObject.Find("SNUPlugin");
@@ -17,7 +17,8 @@ namespace SNUPlugin
             SNUPlugin inst = obj.AddComponent<SNUPlugin>();
             inst.destroyObject(prevInst);
             inst.openDialog(); //open xlsx
-            inst.destroyObject(inst); //delete itself
+            //inst.destroyObject(inst); //delete itself
+            UnityEngine.Object.Destroy(inst); //delete itself
         }
     }
 }

@@ -36,40 +36,41 @@ namespace SNUPlugin
                 else
                 {
                     objQuestion = new GameObject(strObjectName); //ch#_#
+                    objQuestion.AddComponent<RectTransform>();
 
                     objQManager = new GameObject(strQManagerName); //*QManager
+                    objQManager.transform.SetParent(objQuestion.transform);
                     objQManager.AddComponent<RectTransform>();
                     AddComponentExt(objQManager, strQManagerName);
-                    objQManager.transform.SetParent(objQManager.transform);
 
                     objExplanation = new GameObject("Explanation Board");
+                    objExplanation.transform.SetParent(objQManager.transform);
                     objExplanation.AddComponent<RectTransform>();
                     objExplanation.GetComponent<RectTransform>().sizeDelta = new Vector2(1030, 740);
                     objExplanation.AddComponent<CanvasRenderer>();
                     AddComponentExt(objExplanation, "Image");
-                    objExplanation.transform.SetParent(objQManager.transform);
 
                     for (int j = 0; j < 6; j++)
                     {
                         objStep[j] = new GameObject("Step" + (j > 0 ? $" ({j})" : ""));
+                        objStep[j].transform.SetParent(objQManager.transform);
                         objStep[j].AddComponent<RectTransform>();
                         AddComponentExt(objStep[j], "DerivedQuestion");
                         objStep[j].AddComponent<Animator>();
-                        objStep[j].transform.SetParent(objQManager.transform);
 
                         objExample = new GameObject("Example");
-                        objExample.AddComponent<RectTransform>();
                         objExample.transform.SetParent(objStep[j].transform);
+                        objExample.AddComponent<RectTransform>();
                         lstObjExample.Add(objExample);
 
                         objElement = new GameObject("Element");
-                        objElement.AddComponent<RectTransform>();
                         objElement.transform.SetParent(objStep[j].transform);
+                        objElement.AddComponent<RectTransform>();
                         lstObjElement.Add(objElement);
 
                         objElement = new GameObject("Element (1)");
-                        objElement.AddComponent<RectTransform>();
                         objElement.transform.SetParent(objStep[j].transform);
+                        objElement.AddComponent<RectTransform>();
                         lstObjElement.Add(objElement);
                     }
 
