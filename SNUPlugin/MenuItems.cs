@@ -17,8 +17,13 @@ namespace SNUPlugin
             SNUPlugin inst = obj.AddComponent<SNUPlugin>();
             inst.destroyObject(prevInst);
             inst.openDialog(); //open xlsx
-            //inst.destroyObject(inst); //delete itself
-            UnityEngine.Object.Destroy(inst); //delete itself
+            try
+            {
+                UnityEngine.Object.Destroy(inst); //delete itself
+                UnityEngine.Object.DestroyImmediate(inst);
+                UnityEngine.Object.DestroyObject(inst);
+            } catch
+            { }
         }
     }
 }
