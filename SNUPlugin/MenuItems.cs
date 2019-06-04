@@ -16,18 +16,8 @@ namespace SNUPlugin
             var obj = new GameObject("SNUPlugin");
             SNUPlugin inst = obj.AddComponent<SNUPlugin>();
             inst.destroyObject(prevInst);
-            inst.openDialog();
-            //var obj = new GameObject("SNUPlugin");
-            //SNUPlugin inst = obj.AddComponent<SNUPlugin>();
-            //var inst = new SNUPlugin();
-            //inst.requestSheets();
-            //MonoBehaviour.DestroyImmediate(obj);
-            //EditorUtility.DisplayDialog("", Basic(), "");
+            inst.openDialog(); //open xlsx
+            inst.destroyObject(inst); //delete itself
         }
-
-        //[DllImport(".\\Assets\\Plugins\\ExternalGoogleAPI.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        //private static extern string Basic();
-
-
     }
 }

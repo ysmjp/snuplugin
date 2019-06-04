@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthForm.cs" />
+    <Compile Include="Generator.cs" />
     <Compile Include="Google\core\abstractentry.cs" />
     <Compile Include="Google\core\abstractfeed.cs" />
     <Compile Include="Google\core\appcontrol.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Google\gspreadsheets\worksheetquery.cs" />
     <Compile Include="HookObject.cs" />
     <Compile Include="MenuItems.cs" />
+    <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SNUPlugin.cs" />
   </ItemGroup>
