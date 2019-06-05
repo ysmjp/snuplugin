@@ -7,3 +7,12 @@ E:\VSProjects\SNUPlugin\SNUPlugin\obj\Debug\SNUPlugin.csproj.CoreCompileInputs.c
 E:\VSProjects\SNUPlugin\SNUPlugin\obj\Debug\SNUPlugin.csproj.CopyComplete
 E:\VSProjects\SNUPlugin\SNUPlugin\obj\Debug\SNUPlugin.dll
 E:\VSProjects\SNUPlugin\SNUPlugin\obj\Debug\SNUPlugin.pdb
+C:\Projects\VS\snuplugin\SNUPlugin\obj\Debug\SNUPlugin.csprojResolveAssemblyReference.cache
+C:\Projects\VS\snuplugin\SNUPlugin\obj\Debug\SNUPlugin.dll
+C:\Projects\VS\snuplugin\SNUPlugin\obj\Debug\SNUPlugin.pdb
+C:\Projects\VS\snuplugin\SNUPlugin\bin\Debug\SNUPlugin.dll
+C:\Projects\VS\snuplugin\SNUPlugin\bin\Debug\SNUPlugin.pdb
+C:\Projects\VS\snuplugin\SNUPlugin\bin\Debug\Independentsoft.Office.Spreadsheet.dll
+C:\Projects\VS\snuplugin\SNUPlugin\bin\Debug\UnityEditor.dll
+C:\Projects\VS\snuplugin\SNUPlugin\bin\Debug\UnityEngine.dll
+C:\Projects\VS\snuplugin\SNUPlugin\bin\Debug\Independentsoft.Office.Spreadsheet.xml

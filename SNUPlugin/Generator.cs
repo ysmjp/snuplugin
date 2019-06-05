@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine;
 using UnityEditor;
 
 namespace SNUPlugin
@@ -52,7 +51,7 @@ namespace SNUPlugin
 
                     for (int j = 0; j < 6; j++)
                     {
-                        objStep[j] = new GameObject("Step" + (j > 0 ? $" ({j})" : ""));
+                        objStep[j] = new GameObject("Step" + (j > 0 ? " (" + j + ")" : ""));
                         objStep[j].transform.SetParent(objQManager.transform);
                         objStep[j].AddComponent<RectTransform>();
                         AddComponentExt(objStep[j], "DerivedQuestion");
@@ -87,7 +86,9 @@ namespace SNUPlugin
                 snuplugin.destroyObject(objQuestion);
                 intSuccess++;
             }
-            EditorUtility.DisplayDialog("SNUPlugin", $"{Path.GetFileName(proposalList[0].Filename)}:\n{strDir}에\n{proposalList[0].ContentsIndex.ToString()}번 컨텐츠의 Prefab {intSuccess}개를 생성하였습니다.", "닫기");
+            EditorUtility.DisplayDialog("SNUPlugin", Path.GetFileName(proposalList[0].Filename) + 
+                ":\n" + strDir + "에\n" + proposalList[0].ContentsIndex.ToString() + 
+                "번 컨텐츠의 Prefab " + intSuccess + "개를 생성하였습니다.", "닫기");
             return true;
         }
 
@@ -296,7 +297,7 @@ namespace SNUPlugin
         {
             UnityEngine.Object prefab = PrefabUtility.CreatePrefab(path, obj);
             PrefabUtility.ReplacePrefab(obj, prefab, ReplacePrefabOptions.ConnectToPrefab);
-            Debug.Log($"SNUPlugin: Generated prefab in {path}");
+            Debug.Log("SNUPlugin: Generated prefab in " + path);
         }
 
         //create directory
@@ -306,7 +307,7 @@ namespace SNUPlugin
             {
                 if (!EditorUtility.DisplayDialog("SNUPlugin", Path.GetFileName(path) + "화 프리팹이 이미 존재합니다.\n겹쳐 쓰시겠습니까?", "예", "아니오"))
                 {
-                    Debug.Log($"SNUPlugin: \"{path}\" already exists. Generation canceled.");
+                    Debug.Log("SNUPlugin: \"" + path + "\" already exists. Generation canceled.");
                     return false;
                 }
             }
