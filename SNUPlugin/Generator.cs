@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEditor;
+using UnityEditor.Events;
 
 namespace SNUPlugin
 {
@@ -20,6 +22,10 @@ namespace SNUPlugin
             GameObject objQuestion = null, objQManager = null, objExplanation = null, objExample = null, objElement = null;
             List<GameObject> lstObjExample = new List<GameObject>(), lstObjElement = new List<GameObject>();
             GameObject[] objStep = new GameObject[6];
+
+            // Design Constants
+            int BoardWidth = 1030, BoardHeight = 740;
+
             if (proposalList.Count == 0) return false;
             strDir = "Assets/Contents/Resources/Weekday/" + proposalList[0].ContentsIndex.ToString();
             if (!mkdir(strDir)) return false; //fail to make direcotry
@@ -46,34 +52,48 @@ namespace SNUPlugin
                     objExplanation = new GameObject("Explanation Board");
                     objExplanation.transform.SetParent(objQManager.transform);
                     objExplanation.AddComponent<RectTransform>();
-                    objExplanation.GetComponent<RectTransform>().sizeDelta = new Vector2(1030, 740);
+                    objExplanation.GetComponent<RectTransform>().sizeDelta = new Vector2(BoardWidth, BoardHeight);
                     objExplanation.AddComponent<CanvasRenderer>();
                     AddComponentExt(objExplanation, "Image");
-
+                    int nStep = 6;
+                    int nChoice = 5; // We would get this from proposal sheet
                     // Create Steps
-                    for (int j = 0; j < 6; j++)
+                    for (int j = 0; j < nStep; j++)
                     {
                         objStep[j] = new GameObject("Step" + (j > 0 ? $" ({j})" : ""));
                         objStep[j].transform.SetParent(objQManager.transform);
                         objStep[j].AddComponent<RectTransform>();
                         AddComponentExt(objStep[j], "DerivedQuestion");
                         objStep[j].AddComponent<Animator>();
-                        objStep[j].enabled = false;
+                        objStep[j].SetActive(true);
 
                         objExample = new GameObject("Example");
                         objExample.transform.SetParent(objStep[j].transform);
                         objExample.AddComponent<RectTransform>();
                         lstObjExample.Add(objExample);
 
-                        switch(objQManager.name) {
+                        Debug.Log("Snuplugin works well " + objQManager.name);
+                        switch (objQManager.name) {
                             case "ClickOneQManager":
-                                for (int k = 0; k < 5; k++) {
+                                for (int k = 0; k < nChoice; k++) {
                                     string strName = "Element" + k.ToString();
                                     GameObject objChoice = new GameObject(strName);
+                                    objChoice.transform.SetParent(objStep[j].transform);
                                     objChoice.AddComponent<RectTransform>();
-                                    objChoice.RectTransform.sizeDelta = new Vector2(50, 50);
-                                    objChoice.transform.position = new Vector3(k*50, 0, 0);
-                                    objChoice.AddComponent<Button>();
+                                    objChoice.GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+                                    objChoice.transform.position = new Vector3((k-nChoice/2)*(BoardWidth/nChoice - 30), 0, 0);
+                                    Button b = objChoice.AddComponent<Button>();
+                                    
+                                    Debug.Log(b.isActiveAndEnabled.ToString());
+                                    var abcd = new UnityEngine.Events.UnityAction(() => Debug.Log("FUCK"));
+                                    var targetinfo = UnityEvent.GetValidMethodInfo(this, "OnButtonClick", new Type[] { typeof(GameObject)});
+                                    UnityAction<GameObject> action = Delegate.CreateDelegate(typeof(UnityAction<GameObject>), this, targetinfo, false) as UnityAction<GameObject>;
+
+                                    var d = System.Delegate.CreateDelegate(typeof(UnityAction), this, "OnButtonClick") as UnityAction;
+
+                                    UnityEventTools.AddObjectPersistentListener(b.onClick, action, objChoice);
+
+                                    b.onClick.Invoke();
                                 }
                                 break;
                             case "DragAndDropQManager":
@@ -97,9 +117,10 @@ namespace SNUPlugin
 
                 }
                 // enable first step only
-                objStep[0].enabled = true;
+                //objStep[0].SetActive(true);
 
                 createPrefab(objQuestion, strPath); //create and save prefab
+
                 for (int j = 0; j < 6; j++)
                         snuplugin.destroyObject(objStep[j]);
                 foreach (GameObject obj in lstObjExample)
@@ -109,10 +130,16 @@ namespace SNUPlugin
                 snuplugin.destroyObject(objExplanation);
                 snuplugin.destroyObject(objQManager);
                 snuplugin.destroyObject(objQuestion);
+                               
                 intSuccess++;
             }
             EditorUtility.DisplayDialog("SNUPlugin", $"{Path.GetFileName(proposalList[0].Filename)}:\n{strDir}에\n{proposalList[0].ContentsIndex.ToString()}번 컨텐츠의 Prefab {intSuccess}개를 생성하였습니다.", "닫기");
             return true;
+        }
+
+        public void OnButtonClick() {
+            Debug.Log("Button Clicked");
+            return;
         }
 
         public Component AddComponentExt(GameObject obj, string scriptName)
