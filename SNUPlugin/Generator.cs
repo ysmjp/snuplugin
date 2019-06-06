@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
 
 namespace SNUPlugin
@@ -50,6 +50,7 @@ namespace SNUPlugin
                     objExplanation.AddComponent<CanvasRenderer>();
                     AddComponentExt(objExplanation, "Image");
 
+                    // Create Steps
                     for (int j = 0; j < 6; j++)
                     {
                         objStep[j] = new GameObject("Step" + (j > 0 ? $" ({j})" : ""));
@@ -57,12 +58,31 @@ namespace SNUPlugin
                         objStep[j].AddComponent<RectTransform>();
                         AddComponentExt(objStep[j], "DerivedQuestion");
                         objStep[j].AddComponent<Animator>();
+                        objStep[j].enabled = false;
 
                         objExample = new GameObject("Example");
                         objExample.transform.SetParent(objStep[j].transform);
                         objExample.AddComponent<RectTransform>();
                         lstObjExample.Add(objExample);
 
+                        switch(objQManager.name) {
+                            case "ClickOneQManager":
+                                for (int k = 0; k < 5; k++) {
+                                    string strName = "Element" + k.ToString();
+                                    GameObject objChoice = new GameObject(strName);
+                                    objChoice.AddComponent<RectTransform>();
+                                    objChoice.RectTransform.sizeDelta = new Vector2(50, 50);
+                                    objChoice.transform.position = new Vector3(k*50, 0, 0);
+                                    objChoice.AddComponent<Button>();
+                                }
+                                break;
+                            case "DragAndDropQManager":
+                                break;
+                        }
+
+
+                        // General Objects
+                        /*
                         objElement = new GameObject("Element");
                         objElement.transform.SetParent(objStep[j].transform);
                         objElement.AddComponent<RectTransform>();
@@ -72,9 +92,13 @@ namespace SNUPlugin
                         objElement.transform.SetParent(objStep[j].transform);
                         objElement.AddComponent<RectTransform>();
                         lstObjElement.Add(objElement);
+                        */
                     }
 
                 }
+                // enable first step only
+                objStep[0].enabled = true;
+
                 createPrefab(objQuestion, strPath); //create and save prefab
                 for (int j = 0; j < 6; j++)
                         snuplugin.destroyObject(objStep[j]);
